@@ -8,6 +8,19 @@
   chosen {
     stdout-path = "/soc/uart@10000000:115200";
     //tick-timer =  "/cpus/cpu@0";
+    #address-cells = <2>;
+    #size-cells = <2>;
+    ranges;
+
+    framebuffer@83000000 {
+      compatible = "simple-framebuffer";
+      reg = <0x0 0x83000000 0x0 0x25800>;
+      width = <320>;
+      height = <240>;
+      stride = <640>;
+      format = "r5g6b5";
+      status = "okay";
+    };
   };
   cpus {
     #address-cells = <1>;
@@ -37,6 +50,16 @@
   memory@80000000 {
     device_type = "memory";
     reg = <0x0 0x80000000 0x0 0x40000000>;
+  };
+  reserved-memory {
+    #address-cells = <2>;
+    #size-cells = <2>;
+    ranges;
+
+    framebuffer@83000000 {
+      reg = <0x0 0x83000000 0x0 0x25800>;
+      no-map;
+    };
   };
   leds {
     compatible = "gpio-leds";
